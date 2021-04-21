@@ -1,0 +1,71 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Dao;
+
+import java.util.Map;
+import java.util.TreeMap;
+import enums.Tyre;
+import enums.Rim;
+import enums.Spoke;
+import enums.Tube;
+import enums.SeatType;
+/**
+ *
+ * @author harsh
+ */
+public class SeatDao {
+    private Map<Long, Double> seat_comfort_price;
+	private Map<Long, Double> seat_ordinary_price;
+	private Map<Long, Double> seat_racing_price;
+
+	public SeatDao() {
+		setSeatPrice();
+	}
+
+	private void setSeatPrice() {
+		seat_comfort_price = new TreeMap<>();
+		seat_comfort_price.put(Long.valueOf(1578240385), 2000.00);
+		seat_comfort_price.put(Long.valueOf(1586102785), 1500.00);
+
+		seat_ordinary_price = new TreeMap<>();
+		seat_ordinary_price.put(Long.valueOf(1578240385), 1000.00);
+		seat_ordinary_price.put(Long.valueOf(1586102785), 2000.00);
+
+		seat_racing_price = new TreeMap<>();
+		seat_racing_price.put(Long.valueOf(1578240385), 1000.00);
+		seat_racing_price.put(Long.valueOf(1586102785), 2000.00);
+
+	}
+
+	public Double getSeatPrice(String part, Long date) {
+		Double price = Double.valueOf(0);
+
+		if (part.equalsIgnoreCase(SeatType.ORDINARY.toString())) {
+
+			for (Map.Entry<Long, Double> entry : seat_comfort_price.entrySet()) {
+				if (entry.getKey() > date)
+					return price;
+				price = entry.getValue();
+			}
+		} else if (part.equalsIgnoreCase(SeatType.COMFORT.toString())) {
+
+			for (Map.Entry<Long, Double> entry : seat_ordinary_price.entrySet()) {
+				if (entry.getKey() > date)
+					return price;
+				price = entry.getValue();
+			}
+		} else if (part.equalsIgnoreCase(SeatType.RACING.toString())) {
+
+			for (Map.Entry<Long, Double> entry : seat_racing_price.entrySet()) {
+				if (entry.getKey() > date)
+					return price;
+				price = entry.getValue();
+			}
+		}
+		return price;
+	}
+    
+}
